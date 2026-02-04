@@ -17,9 +17,11 @@ export class ClassComponent extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    e.target.elements.user_number.value = '';
+    e.target.user_number.value = '';
+    console.log(e.target.user_number.value);
     this.setState(state => ({
       count: state.count + 1,
+
     }));
     this.setState(state => {
       if (!state.userNumber) {
@@ -37,8 +39,8 @@ export class ClassComponent extends React.Component {
           result: `${state.userNumber} меньше загаданного`,
         };
       }
-      e.target.elements.submit.hidden = true;
-      e.target.elements.reset.hidden = false;
+      e.target.elements.submit_button.hidden = true;
+      e.target.elements.reset_button.hidden = false;
       e.target.elements.user_number.disabled = true;
       return {
         result: `Вы угадалии, загаданное число ${state.userNumber},
@@ -47,14 +49,12 @@ export class ClassComponent extends React.Component {
     });
   };
   handleReset = e => {
-    e.preventDefault();
-    e.target.elements.user_number.value = '';
     this.setState(state => ({
       count: 0,
     }));
     this.setState(state => {
-      e.target.elements.submit.hidden = false;
-      e.target.elements.reset.hidden = true;
+      e.target.elements.submit_button.hidden = false;
+      e.target.elements.reset_button.hidden = true;
       e.target.elements.user_number.disabled = false;
       return {
         result: `Результат`,
@@ -78,10 +78,10 @@ export class ClassComponent extends React.Component {
             Угадай число
           </label>
           <input className={style.input} type='number' id='user_number'
-            onChange={this.handleChange} value={this.state.userNumber} />
+            onChange={this.handleChange} />
           <button type='submit'
-            className={style.btn} id='submit'>Угадать</button>
-          <button type='reset' id='reset'
+            className={style.btn} id='submit_button'>Угадать</button>
+          <button type='reset' id='reset_button'
             className={style.btn} hidden>Сыграть еще раз</button>
         </form>
       </div >
