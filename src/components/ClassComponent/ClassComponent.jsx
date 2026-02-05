@@ -13,15 +13,16 @@ export class ClassComponent extends React.Component {
         Math.random() * this.props.max - this.props.min) +
         this.props.min,
       count: 0,
+      min: this.props.min,
+      max: this.props.max,
     };
   }
   handleSubmit = e => {
     e.preventDefault();
-    e.target.user_number.value = '';
+    // e.target.user_number.value = '';
     console.log(e.target.user_number.value);
     this.setState(state => ({
       count: state.count + 1,
-
     }));
     this.setState(state => {
       if (!state.userNumber) {
@@ -39,6 +40,9 @@ export class ClassComponent extends React.Component {
           result: `${state.userNumber} меньше загаданного`,
         };
       }
+      this.setState(state => ({
+        userNumber: '',
+      }));
       e.target.elements.submit_button.hidden = true;
       e.target.elements.reset_button.hidden = false;
       e.target.elements.user_number.disabled = true;
@@ -51,6 +55,9 @@ export class ClassComponent extends React.Component {
   handleReset = e => {
     this.setState(state => ({
       count: 0,
+      randomNumber: Math.floor(
+        Math.random() * state.max - state.min) +
+        state.min,
     }));
     this.setState(state => {
       e.target.elements.submit_button.hidden = false;
@@ -78,7 +85,7 @@ export class ClassComponent extends React.Component {
             Угадай число
           </label>
           <input className={style.input} type='number' id='user_number'
-            onChange={this.handleChange} />
+            onChange={this.handleChange} value={this.state.userNumber} />
           <button type='submit'
             className={style.btn} id='submit_button'>Угадать</button>
           <button type='reset' id='reset_button'
